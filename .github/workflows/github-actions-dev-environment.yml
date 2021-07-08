@@ -5,12 +5,12 @@ jobs:
     runs-on: [debian-runner]
     steps:
       - run: echo "🎯 DEV ENVIRONMENT RUNNING"
-      - run: echo "🧭 Running on Debain Self Hosted Runner (Linux x64) - AWS Hosted VM"
-      - run: echo "🚤 Navigating to the back-end project directory."
+      - run: echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
       - run: |
-          cd $BACK_END_DIR |
+          echo "🚤 Navigating to the back-end project directory."
+          cd $BACK_END_DIR
           pwd
-      - run: echo "📍 Checking out to dev branch."
-      - run: git checkout dev
-      - run: echo "🛠 Building Maven project."
-      - run: ./mvnw clean install
+          echo "📍 Checking out to dev branch."
+          git checkout dev
+          echo "🛠 Building Maven project."
+          ./mvnw clean install
