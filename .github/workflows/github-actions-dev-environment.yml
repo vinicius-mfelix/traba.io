@@ -3,12 +3,15 @@ on: [push]
 jobs:
   Build-Application:
     runs-on: [debian-runner]
+    env: 
+      BACK_END_DIR: /home/admin/projects/source-code/back-end/startupone-backend
     steps:
       - name: Build Maven Artifact
-        working-directory: /home/admin/projects/source-code/back-end/startupone-backend
+        working-directory: ${{ BACK_END_DIR }}
         run: |
             echo "🎯 DEV ENVIRONMENT RUNNING"
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
             git checkout dev
             echo "🛠 Building Maven project."
             ./mvnw clean install
+            cd ./target
