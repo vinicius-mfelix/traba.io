@@ -4,13 +4,11 @@ jobs:
   Build-Application:
     runs-on: [debian-runner]
     steps:
-      - run: echo "🎯 DEV ENVIRONMENT RUNNING"
-      - run: echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
-      - run: |
-          echo "🚤 Navigating to the back-end project directory."
-          cd $BACK_END_DIR
-          pwd
-          echo "📍 Checking out to dev branch."
-          git checkout dev
-          echo "🛠 Building Maven project."
-          ./mvnw clean install
+      - name: Build Maven Artifact
+        working-directory: $BACK_END_DIR
+        run: |
+            echo "🎯 DEV ENVIRONMENT RUNNING"
+            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+            git checkout dev
+            echo "🛠 Building Maven project."
+            ./mvnw clean install
