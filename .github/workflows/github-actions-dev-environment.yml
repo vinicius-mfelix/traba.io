@@ -13,7 +13,6 @@ jobs:
             echo "🎯 DEV ENVIRONMENT RUNNING"
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
             git checkout dev
-            git pull origin dev
             echo "🛠 Installing Maven dependency..."
             ./mvnw clean install
       - name: Build Maven Artifact Package
