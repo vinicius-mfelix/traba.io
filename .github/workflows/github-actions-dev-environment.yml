@@ -5,7 +5,7 @@ jobs:
     runs-on: [debian-runner]
     env: 
       BACK_END_DIR: /home/admin/projects/source-code/back-end/startupone-backend
-      JAR_BACK_END_DIR: /home/admin/projects/source-code/back-end/startupone-backend/target
+      JAR_FILE: /home/admin/projects/source-code/back-end/startupone-backend/target/startupone-0.0.1-SNAPSHOT.jar
     steps:
       - name: Install Maven Artifact
         working-directory: ${{ env.BACK_END_DIR }}
@@ -13,7 +13,7 @@ jobs:
             echo "🎯 DEV ENVIRONMENT RUNNING"
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
             git checkout dev
-            echo "🛠 Installing Maven dependency."
+            echo "🛠 Installing Maven dependency..."
             ./mvnw clean install
       - name: Build Maven Artifact Package
         working-directory: ${{ env.BACK_END_DIR }}
@@ -21,5 +21,12 @@ jobs:
             echo "🎯 DEV ENVIRONMENT RUNNING"
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
             git checkout dev
-            echo "🛠 Building Maven package."
+            echo "🛠 Building Maven package..."
             ./mvnw clean package
+      - name: Publish Tomcat Embedded Server
+        run: |
+            echo "🎯 DEV ENVIRONMENT RUNNING"
+            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+            git checkout dev
+            echo "📬 Publishing Server..."
+            java -jar ${{ env.JAR_FILE }}
