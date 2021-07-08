@@ -1,0 +1,14 @@
+name: GitHub Actions Dev Environment
+on: [push]
+jobs:
+  Build-Application:
+    runs-on: [debian-runner]
+    steps:
+      - run: echo "🎯 DEV ENVIRONMENT RUNNING"
+      - run: echo "🧭 Running on: ${{ runner.os }} | AWS Hosted VM"
+      - run: echo "🚤 Navigating to the back-end project directory."
+      - run: cd $BACK_END_DIR
+      - run: echo "📍 Checking out to dev branch."
+      - run: git checkout dev
+      - run: echo "🛠 Building Maven project."
+      - run: ./mvnw clean install
