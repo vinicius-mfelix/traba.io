@@ -32,6 +32,8 @@ jobs:
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
             echo "🧹 Cleaning Dist Directory..."
             rm -rf *
+            echo "🛑 Stopping current server..."
+            sudo systemctl stop startupone-backend-dev.service
       - name: Copy Files to Dist Directory
         working-directory: ${{ env.JAR_FILE_DIR }}
         run: |
@@ -48,5 +50,5 @@ jobs:
             echo "📬 Publishing Server..."
             sudo chown admin ${{ env.JAR_FILE }}
             sudo chmod 500 ${{ env.JAR_FILE }}
-            sudo systemctl restart startupone-backend-dev.service
+            sudo systemctl start startupone-backend-dev.service
             sudo systemctl status startupone-backend-dev.service
