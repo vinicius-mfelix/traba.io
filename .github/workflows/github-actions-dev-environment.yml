@@ -24,6 +24,7 @@ jobs:
             echo "🛠 Building Maven package..."
             ./mvnw clean package
       - name: Publish Tomcat Embedded Server
+        working-directory: ${{ env.BACK_END_DIR }}
         run: |
             echo "🎯 DEV ENVIRONMENT RUNNING"
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
