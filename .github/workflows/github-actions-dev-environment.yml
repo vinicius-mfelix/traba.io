@@ -5,7 +5,7 @@ jobs:
     runs-on: [debian-runner]
     steps:
       - name: Build Maven Artifact
-        working-directory: $BACK_END_DIR
+        working-directory: /home/admin/projects/source-code/back-end/startupone-backend
         run: |
             echo "🎯 DEV ENVIRONMENT RUNNING"
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
