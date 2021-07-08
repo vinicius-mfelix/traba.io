@@ -5,6 +5,7 @@ jobs:
     runs-on: [debian-runner]
     env: 
       BACK_END_DIR: /home/admin/projects/source-code/back-end/startupone-backend
+      DIST_DIR: /home/admin/projects/dist/back-end/dev
       JAR_FILE: /home/admin/projects/source-code/back-end/startupone-backend/target/startupone-0.0.1-SNAPSHOT.jar
     steps:
       - name: Install Maven Artifact
@@ -31,4 +32,5 @@ jobs:
             git checkout dev
             echo "📬 Publishing Server..."
             sudo systemctl
+            whoami
             
