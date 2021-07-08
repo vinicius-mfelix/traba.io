@@ -7,7 +7,7 @@ jobs:
       BACK_END_DIR: /home/admin/projects/source-code/back-end/startupone-backend
     steps:
       - name: Build Maven Artifact
-        working-directory: ${{ BACK_END_DIR }}
+        working-directory: ${{ env.BACK_END_DIR }}
         run: |
             echo "🎯 DEV ENVIRONMENT RUNNING"
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
