@@ -7,7 +7,8 @@ jobs:
       - run: echo "🎯 DEV ENVIRONMENT RUNNING"
       - run: echo "🧭 Running on Debain Self Hosted Runner (Linux x64) - AWS Hosted VM"
       - run: echo "🚤 Navigating to the back-end project directory."
-      - run: cd $BACK_END_DIR
+      - run: |
+          cd $BACK_END_DIR
       - run: | 
           pwd
       - run: echo "📍 Checking out to dev branch."
