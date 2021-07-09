@@ -20,6 +20,7 @@ jobs:
         run: |
             echo "🎯 DEV ENVIRONMENT RUNNING"
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+            ${{ env.PULL_DEV_SCRIPT }}
             git checkout dev
             echo "🛠 Installing Maven dependency..."
             ./mvnw clean install
