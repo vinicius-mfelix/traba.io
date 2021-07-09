@@ -39,7 +39,7 @@ jobs:
           echo "🐳 Building Docker Image..."
           docker image build -t startupone-api-dev .
       - name: Deploy Docker Image
-      run: |
+        run: |
           echo "🎯 DEV ENVIRONMENT RUNNING"
           echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
           echo "🐳 Deploying Docker Image..."
