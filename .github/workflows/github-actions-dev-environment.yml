@@ -1,0 +1,60 @@
+name: GitHub Actions Dev Environment
+on: 
+  push:
+    branches:
+      - dev
+  pull_request:
+    branches:
+      - dev
+jobs:
+  Build-Application:
+    runs-on: [debian-runner]
+    env:
+      JAR_FILE: startupone-0.0.1-SNAPSHOT.jar
+      DIST_DIR: /home/admin/projects/dist/back-end/dev
+      BACK_END_DIR: /home/admin/projects/source-code/back-end/startupone-backend
+      JAR_FILE_DIR: /home/admin/projects/source-code/back-end/startupone-backend/target
+    steps:
+      - name: Install Maven Artifact
+        working-directory: ${{ env.BACK_END_DIR }}
+        run: |
+            echo "🎯 DEV ENVIRONMENT RUNNING"
+            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+            git checkout dev
+            echo "🛠 Installing Maven dependency..."
+            ./mvnw clean install
+      - name: Build Maven Artifact Package
+        working-directory: ${{ env.BACK_END_DIR }}
+        run: |
+            echo "🎯 DEV ENVIRONMENT RUNNING"
+            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+            git checkout dev
+            echo "🛠 Building Maven package..."
+            ./mvnw clean package
+      - name: Clean Dist Directory
+        working-directory: ${{ env.DIST_DIR }}
+        run: |
+            echo "🎯 DEV ENVIRONMENT RUNNING"
+            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+            echo "🧹 Cleaning Dist Directory..."
+            rm -rf *
+            echo "🛑 Stopping current server..."
+            sudo systemctl stop startupone-backend-dev.service
+      - name: Copy Files to Dist Directory
+        working-directory: ${{ env.JAR_FILE_DIR }}
+        run: |
+            echo "🎯 DEV ENVIRONMENT RUNNING"
+            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+            echo "💾 Copying files to the dist directory..."
+            git checkout dev
+            cp ${{ env.JAR_FILE }} ${{ env.DIST_DIR }}
+      - name: Publish Tomcat Service
+        working-directory: ${{ env.DIST_DIR }}
+        run: |
+            echo "🎯 DEV ENVIRONMENT RUNNING"
+            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+            echo "📬 Publishing Server..."
+            sudo chown admin ${{ env.JAR_FILE }}
+            sudo chmod 500 ${{ env.JAR_FILE }}
+            sudo systemctl start startupone-backend-dev.service
+            sudo systemctl status startupone-backend-dev.service
