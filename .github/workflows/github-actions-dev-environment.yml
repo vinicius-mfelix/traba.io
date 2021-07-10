@@ -38,6 +38,7 @@ jobs:
           echo "🎯 DEV ENVIRONMENT RUNNING"
           echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
           echo "🐳 Building Docker Image..."
+          sudo docker rm startupone-api-dev --force
           sudo docker image build -t startupone-api-dev .
       - name: Deploy Docker Image
         run: |
