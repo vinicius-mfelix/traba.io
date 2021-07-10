@@ -1,4 +1,4 @@
-name: GitHub Actions Dev Environment
+name: GitHub Actions Dev Environment - AWS Deploy
 on: 
   push:
     branches:
@@ -20,9 +20,10 @@ jobs:
         run: |
             echo "🎯 DEV ENVIRONMENT RUNNING"
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+            git pull origin dev
             git checkout dev
             echo "🛠 Installing Maven dependency..."
-            ./mvnw clean install
+            ./mvnw clean install -DskipTests
       - name: Build Maven Artifact Package
         working-directory: ${{ env.BACK_END_DIR }}
         run: |
@@ -30,31 +31,53 @@ jobs:
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
             git checkout dev
             echo "🛠 Building Maven package..."
-            ./mvnw clean package
-      - name: Clean Dist Directory
-        working-directory: ${{ env.DIST_DIR }}
+            ./mvnw clean package -DskipTests
+      - name: Clean Docker Container and Image
         run: |
-            echo "🎯 DEV ENVIRONMENT RUNNING"
-            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
-            echo "🧹 Cleaning Dist Directory..."
-            rm -rf *
-            echo "🛑 Stopping current server..."
-            sudo systemctl stop startupone-backend-dev.service
-      - name: Copy Files to Dist Directory
-        working-directory: ${{ env.JAR_FILE_DIR }}
+          echo "🎯 DEV ENVIRONMENT RUNNING"
+          echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+          echo "🐳 Cleaning Docker Files..."
+          sudo docker rm startupone-api-dev --force
+          sudo docker image rm startupone-api-dev --force
+      - name: Build Docker Image
+        working-directory: ${{ env.BACK_END_DIR }}
         run: |
-            echo "🎯 DEV ENVIRONMENT RUNNING"
-            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
-            echo "💾 Copying files to the dist directory..."
-            git checkout dev
-            cp ${{ env.JAR_FILE }} ${{ env.DIST_DIR }}
-      - name: Publish Tomcat Service
-        working-directory: ${{ env.DIST_DIR }}
+          echo "🎯 DEV ENVIRONMENT RUNNING"
+          echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+          echo "🐳 Building Docker Image..."
+          sudo docker rm startupone-api-dev --force
+          sudo docker image build -t startupone-api-dev .
+      - name: Deploy Docker Image
         run: |
-            echo "🎯 DEV ENVIRONMENT RUNNING"
-            echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
-            echo "📬 Publishing Server..."
-            sudo chown admin ${{ env.JAR_FILE }}
-            sudo chmod 500 ${{ env.JAR_FILE }}
-            sudo systemctl start startupone-backend-dev.service
-            sudo systemctl status startupone-backend-dev.service
+          echo "🎯 DEV ENVIRONMENT RUNNING"
+          echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+          echo "🐳 Deploying Docker Image..."
+          sudo docker run --name startupone-api-dev -p 4000:4000 -d startupone-api-dev:latest
+
+#       ============ Service Systemctl Runner ============
+#       - name: Clean Dist Directory
+#         working-directory: ${{ env.DIST_DIR }}
+#         run: |
+#             echo "🎯 DEV ENVIRONMENT RUNNING"
+#             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+#             echo "🧹 Cleaning Dist Directory..."
+#             rm -rf *
+#             echo "🛑 Stopping current server..."
+#       - name: Copy Files to Dist Directory
+#         working-directory: ${{ env.JAR_FILE_DIR }}
+#         run: |
+#             echo "🎯 DEV ENVIRONMENT RUNNING"
+#             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+#             echo "💾 Copying files to the dist directory..."
+#             git checkout dev
+#             cp ${{ env.JAR_FILE }} ${{ env.DIST_DIR }}
+#       - name: Publish Tomcat Service
+#         working-directory: ${{ env.DIST_DIR }}
+#         run: |
+#             echo "🎯 DEV ENVIRONMENT RUNNING"
+#             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+#             echo "📬 Publishing Server..."
+#             sudo chown admin ${{ env.JAR_FILE }}
+#             sudo chmod 500 ${{ env.JAR_FILE }}
+#             sudo systemctl start startupone-backend-dev.service
+#             sudo systemctl status startupone-backend-dev.service
