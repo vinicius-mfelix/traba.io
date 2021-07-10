@@ -1,4 +1,4 @@
-name: GitHub Actions Dev Environment
+name: GitHub Actions Dev Environment - AWS Deploy
 on: 
   push:
     branches:
