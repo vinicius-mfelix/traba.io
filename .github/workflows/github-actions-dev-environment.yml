@@ -31,7 +31,7 @@ jobs:
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
             git checkout dev
             echo "🛠 Building Maven package..."
-            ./mvnw clean package -DskipTests
+            ./mvnw clean package
       - name: Clean Docker Container and Image
         run: |
           echo "🎯 DEV ENVIRONMENT RUNNING"
