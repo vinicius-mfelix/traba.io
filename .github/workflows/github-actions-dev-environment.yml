@@ -32,6 +32,13 @@ jobs:
             git checkout dev
             echo "🛠 Building Maven package..."
             ./mvnw clean package
+      - name: Clean Docker Container and Image
+        run: |
+          echo "🎯 DEV ENVIRONMENT RUNNING"
+          echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
+          echo "🐳 Cleaning Docker Files..."
+          sudo docker rm startupone-api-dev --force
+          sudo docker image rm startupone-api-dev --force
       - name: Build Docker Image
         working-directory: ${{ env.BACK_END_DIR }}
         run: |
