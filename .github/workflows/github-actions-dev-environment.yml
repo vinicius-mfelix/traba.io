@@ -14,6 +14,9 @@ jobs:
       DIST_DIR: /home/admin/projects/dist/back-end/dev
       BACK_END_DIR: /home/admin/projects/source-code/back-end/startupone-backend
       JAR_FILE_DIR: /home/admin/projects/source-code/back-end/startupone-backend/target
+      DB_HOST: ${{ secrets.DB_HOST }}
+      DB_USERNAME: ${{ secrets.DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
     steps:
       - name: Install Maven Artifact
         working-directory: ${{ env.BACK_END_DIR }}
