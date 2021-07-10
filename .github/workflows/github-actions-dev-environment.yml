@@ -23,7 +23,7 @@ jobs:
             git pull origin dev
             git checkout dev
             echo "🛠 Installing Maven dependency..."
-            ./mvnw clean install
+            ./mvnw clean install -DskipTests
       - name: Build Maven Artifact Package
         working-directory: ${{ env.BACK_END_DIR }}
         run: |
@@ -31,7 +31,7 @@ jobs:
             echo "🧭 Running on ${{ runner.os }} - AWS Hosted VM"
             git checkout dev
             echo "🛠 Building Maven package..."
-            ./mvnw clean package
+            ./mvnw clean package -DskipTests
       - name: Clean Docker Container and Image
         run: |
           echo "🎯 DEV ENVIRONMENT RUNNING"
