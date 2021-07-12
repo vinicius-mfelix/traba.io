@@ -133,7 +133,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 		registry.addResourceHandler("swagger-ui.html")
 			.addResourceLocations("classpath:/META-INF/resources/");
 		
-		registry.addResourceHandler("v1/webjars/**")
+		registry.addResourceHandler("*/webjars/**")
 			.addResourceLocations("classpath:/META-INF/resources/webjars/");
 	}
 
