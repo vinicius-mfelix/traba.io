@@ -57,7 +57,7 @@ public class UserDTOInput {
 	@NotBlank
 	private String passwordConfirm;
 	
-	@ApiModelProperty(example = "1999-08-05 (August, 5th, 1999)", value = "User's birth date (year-month-day).", required = true)
+	@ApiModelProperty(example = "1999-08-05", value = "User's birth date (year-month-day).", required = true)
 	@JsonFormat(shape = JsonFormat.Shape.STRING)
 	@NotNull
 	private LocalDate birthDate;
