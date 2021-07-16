@@ -38,6 +38,7 @@ public class SpringFoxConfig implements WebMvcConfigurer {
 					.apis(RequestHandlerSelectors.basePackage("com.growth.startupone.api.v1"))
 					.build()
 					.apiInfo(apiInfo())
+					.host("api.traba.io")
 					.additionalModels(typeResolver.resolve(Problem.class))
 					.tags(
 							new Tag("Users", "Endpoint for users resource requests."))
